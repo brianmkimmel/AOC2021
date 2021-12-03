@@ -28,27 +28,7 @@ def find_gamma(columns: dict) -> list:
       epsilon.append('1')
   return [int(''.join(gamma),2),int(''.join(epsilon),2)]
 
-def count_filter(data: list, c: int) -> list:
-  #print(f"Starting row count: {len(data)}")
-  one = 0
-  zero = 0
-  for row in data:
-    if row[c] == "1":
-      one += 1
-    else:
-      zero += 1
-  print(f"In column {c} count {one} ones and {zero} zeros")
-  # filter rows
-  if zero > one:
-    keep_val = "0"
-  else:
-    keep_val = "1"
-  data = list(filter(lambda row: row[c] == keep_val, data))
-  #print(f"ending row count: {len(data)}")
-  return data
-
-
-def count_filter_co2(data: list, c: int) -> list:
+def count_filter(data: list, c: int, greater: bool) -> list:
   #print(f"Starting row count: {len(data)}")
   if len(data) == 1:
     return data
@@ -59,24 +39,23 @@ def count_filter_co2(data: list, c: int) -> list:
       one += 1
     else:
       zero += 1
-  print(f"In column {c} count {one} ones and {zero} zeros")
+  #print(f"In column {c} count {one} ones and {zero} zeros")
   # filter rows
   if zero > one:
-    keep_val = "1"
-  elif zero == one:
-    keep_val = "0"
-  else:
-    keep_val = "0"
+    keep_val = "0" if greater else "1"
+  elif zero <= one:
+    keep_val = "1" if greater else "0"
   data = list(filter(lambda row: row[c] == keep_val, data))
   #print(f"ending row count: {len(data)}")
   return data
+
 
 def find_lsr(data: list) -> list:
   data2 = deepcopy(data)
   #find most common value in current column
   for c in range(0,len(data[0])):
-    data = count_filter(data,c)
-    data2 = count_filter_co2(data2, c)
+    data = count_filter(data,c, True)
+    data2 = count_filter(data2, c, False)
   oxy = int(''.join(data[0]),2)
   co2 = int(''.join(data2[0]),2)
   return [oxy, co2]
