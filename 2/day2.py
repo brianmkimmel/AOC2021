@@ -1,4 +1,4 @@
-def run_sub(commands):
+def run_sub(commands: list) -> None:
   position = 0
   depth = 0
   for c in commands:
@@ -10,7 +10,7 @@ def run_sub(commands):
       depth -= c[1]
   print(f"Final hoz pos: {position}, final depth: {depth}, puzzle answer: {position*depth}")
 
-def run_sub2(commands):
+def run_sub2(commands: list) -> None:
   pos = 0
   depth = 0
   aim = 0
@@ -24,7 +24,7 @@ def run_sub2(commands):
       aim -= c[1]
   print(f"Final hoz pos: {pos}, final depth: {depth}, puzzle answer: {pos*depth}")
 
-def parse_input():
+def parse_input() -> list:
   commands = []
   with open('input.txt') as f:
     for line in f:
