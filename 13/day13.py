@@ -10,10 +10,14 @@ def fold_paper(paper,fold):
       folds = line
     else:
       folds = bottom_rows
+    print(f"line: {line}, rows: {len(paper)}, bottom_rows: {bottom_rows}")
     for r in range(1,folds+1):
       for c in range(len(paper[0])):
         #print(f"Upper: {c},{line-r} {paper[line-r][c]}, Lower: {c},{line+r} {paper[line+r][c]}")
-        paper[line-r][c] += paper[line+r][c]
+        try:
+          paper[line-r][c] += paper[line+r][c]
+        except Exception as e:
+          pass
     paper = paper[:line]
   elif axis == 'x':
     #fold columns
@@ -25,7 +29,10 @@ def fold_paper(paper,fold):
     for c in range(1,folds+1):
       for r in range(len(paper)):
         #print(f"Upper: {line-c},{r} {paper[r][line-c]}, Lower: {line+c},{r} {paper[r][line+c]}")
-        paper[r][line-c] += paper[r][line+c]
+        try:
+          paper[r][line-c] += paper[r][line+c]
+        except Exception as e:
+          pass
     paper2 = []
     for row in paper:
       paper2.append(row[:line])
@@ -41,7 +48,7 @@ if __name__ == "__main__":
   if test:
     input_file = 'test_input.txt'
   else:
-    input_file = 'input.txt'
+    input_file = '13.txt'
   
   with open(input_file) as f:
     points = []
